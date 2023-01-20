@@ -7,7 +7,7 @@ import time, os
 
 github_link = "https://github.com/kabachuha/discord-rpc-for-automatic1111-webui"
 
-enable_dynamic_status = True
+enable_dynamic_status = False
 
 def start_rpc():
     print('Launching the Discord RPC extension. By https://github.com/kabachuha, version 0.1b')
