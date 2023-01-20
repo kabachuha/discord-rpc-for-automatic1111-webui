@@ -7,7 +7,7 @@ import time, os
 
 github_link = "https://github.com/kabachuha/discord-rpc-for-automatic1111-webui"
 
-enable_dynamic_status = False
+enable_dynamic_status = True
 
 def start_rpc():
     print('Launching the Discord RPC extension. By https://github.com/kabachuha, version 0.1b')
@@ -41,7 +41,7 @@ def start_rpc():
     rpc_watcher = threading.Thread(target=RPC_thread, args=(rpc,), daemon=True)
     rpc_watcher.start()
     if enable_dynamic_status:
-        state_watcher = threading.Thread(target=check_progress_loop, args=(rpc,), daemon=True)
+        state_watcher = threading.Thread(target=check_progress_loop, args=(rpc,RPC_thread,), daemon=True)
         state_watcher.start()
     print("If everything is fine, the RPC should be running by now. Proceed to your Discord settings and add the app (it's name is huge) to the game list.")
     
@@ -52,12 +52,12 @@ def on_ui_tabs():
 script_callbacks.on_ui_tabs(on_ui_tabs)
 
 # Dynamic status check #FIXME deadlock happens
-def check_progress_loop(rpc):
+def check_progress_loop(rpc,RPC_thread):
     while True:
         checkpoint_info = shared.sd_model.sd_checkpoint_info
         model_name = os.path.basename(checkpoint_info.filename)
         if shared.state.job_count == 0:
-            rpc.update(large_image="auto", large_text=model_name, small_text="Idle", timestamp=rpc.timestamp())
+            rpc.set_activity(large_image="auto", details=model_name, state="Idle", timestamp=rpc.timestamp())
         else:
-            rpc.update(large_image="generating", large_text=model_name, small_text=shared.state.job, timestamp=rpc.timestamp())
+            rpc.set_activity(large_image="generating", details=model_name, state=f'generating {shared.state.job_count} pics', timestamp=rpc.timestamp())
         time.sleep(1) # update once per second
