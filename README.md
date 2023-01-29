@@ -1,6 +1,6 @@
 # Discord Rich Presence for AUTOMATIC1111's WebUI
 
- Silent extension providing connection to Discord PRC, so it would show a fancy table in the user profile. Extension is silent, so no additional tabs will clutter your visual space.
+ Silent extension providing connection to Discord RPC, so it would show a fancy table in the user profile. Extension is silent, so no additional tabs will clutter your visual space.
  
  ## Screenshots
  
