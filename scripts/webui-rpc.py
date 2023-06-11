@@ -8,8 +8,6 @@ from time import mktime
 
 github_link = "https://github.com/kabachuha/discord-rpc-for-automatic1111-webui"
 
-enable_dynamic_status = True
-
 def start_rpc():
 
     print('Launching the Discord RPC extension. By https://github.com/kabachuha, version 0.1b')
@@ -67,4 +65,4 @@ def check_progress_loop(rpc):
                     print(f'Failed to set Discord RPC. model_name="{model_name}", last_timestamp={last_timestamp}. Err: {ex}')
                 idle_last = False
                 last_job_count = shared.state.job_count
-        time.sleep(15) # update once per second
+        time.sleep(15) # update once per 15 seconds (Discord limitation)
